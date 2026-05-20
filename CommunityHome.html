@@ -1,0 +1,212 @@
+import { MapPin, Send, CheckCircle2, Loader2, FileText, ShieldAlert } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
+import { Profile } from '../types';
+
+const SYMPTOMS = [
+  'Fever', 'Cough', 'Shortness of breath', 'Fatigue', 
+  'Muscle aches', 'Headache', 'Loss of taste/smell', 
+  'Sore throat', 'Congestion', 'Nausea/Vomiting', 'Diarrhea'
+];
+
+const DISEASES = [
+  'Cholera', 'Lassa Fever', 'Malaria', 'COVID-19', 'Meningitis', 'Measles', 'Yellow Fever', 'Other'
+];
+
+export default function CommunityHome({ profile }: { profile: Profile | null }) {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locLoading, setLocLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    suspected_disease: '',
+    symptoms: [] as string[],
+    date_of_onset: new Date().toISOString().split('T')[0],
+    lga_reported: profile?.assigned_lga || '',
+    additional_comments: ''
+  });
+
+  const handleCaptureLocation = () => {
+    setLocLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocLoading(false);
+      },
+      (err) => {
+        console.error(err);
+        setLocLoading(false);
+      },
+      { timeout: 10000 }
+    );
+  };
+
+  const toggleSymptom = (s: string) => {
+    setFormData(prev => ({
+      ...prev,
+      symptoms: prev.symptoms.includes(s) 
+        ? prev.symptoms.filter(item => item !== s)
+        : [...prev.symptoms, s]
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!profile) return;
+    
+    if (!formData.suspected_disease || !formData.lga_reported) {
+      alert('Please fill all mandatory fields.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const { error } = await supabase
+        .from('disease_reports')
+        .insert({
+          reported_by: profile.id,
+          suspected_disease: formData.suspected_disease,
+          symptoms: formData.symptoms,
+          date_of_onset: formData.date_of_onset,
+          lga_reported: formData.lga_reported,
+          severity_level: 'Mild', // Community default
+          cases_count: 1,
+          additional_comments: formData.additional_comments,
+          latitude: location?.lat || null,
+          longitude: location?.lng || null,
+          status: 'Suspected'
+        });
+
+      if (error) throw error;
+
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        setFormData({
+          suspected_disease: '',
+          symptoms: [],
+          date_of_onset: new Date().toISOString().split('T')[0],
+          lga_reported: profile.assigned_lga || '',
+          additional_comments: ''
+        });
+        setLocation(null);
+      }, 3000);
+    } catch (err: any) {
+      console.error(err);
+      alert(err.message || 'Report submission failed.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-8">
+      {/* Community Header */}
+      <div className="bg-white p-10 rounded-[36px] border border-slate-100 shadow-sm">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-[10px] font-black text-emerald-600 tracking-[0.4em] uppercase text-center w-full md:text-left">Public Surveillance Network</span>
+        </div>
+      </div>
+      <span class="status-chip">Live Monitoring</span>
+    </header>
+
+    <main class="content-grid">
+      <section class="hero-panel">
+        <span class="hero-badge">Public Surveillance Network</span>
+        <h2>Report symptoms safely and anonymously.</h2>
+        <p>Help your community stay informed by sharing health observations without revealing your identity.</p>
+
+        <div class="metrics-row">
+          <div class="metric-card">
+            <span class="metric-value">2,314</span>
+            <p>Reports managed</p>
+          </div>
+          <div class="metric-card">
+            <span class="metric-value">94%</span>
+            <p>Verified response rate</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="form-panel">
+        <div class="form-card">
+          <div class="form-header">
+            <p class="section-title">Observation details</p>
+            <p class="section-subtitle">Submit a community health report in under a minute.</p>
+          </div>
+          <form action="#" method="post" class="health-form">
+            <div class="field-group">
+              <label for="disease">Suspected illness</label>
+              <select id="disease" name="disease" required>
+                <option value="">Select sickness type</option>
+                <option>Cholera</option>
+                <option>Lassa Fever</option>
+                <option>Malaria</option>
+                <option>COVID-19</option>
+                <option>Meningitis</option>
+                <option>Measles</option>
+                <option>Yellow Fever</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field-group">
+              <label for="locality">Locality (LGA)</label>
+              <input id="locality" name="locality" type="text" placeholder="e.g. Lagos Island" required />
+            </div>
+
+            <div class="field-group">
+              <label>Symptom checklist</label>
+              <div class="chips-grid">
+                <button type="button" class="chip">Fever</button>
+                <button type="button" class="chip">Cough</button>
+                <button type="button" class="chip">Shortness of breath</button>
+                <button type="button" class="chip">Fatigue</button>
+                <button type="button" class="chip">Muscle aches</button>
+                <button type="button" class="chip">Headache</button>
+                <button type="button" class="chip">Loss of taste</button>
+                <button type="button" class="chip">Sore throat</button>
+                <button type="button" class="chip">Congestion</button>
+                <button type="button" class="chip">Nausea</button>
+                <button type="button" class="chip">Diarrhea</button>
+              </div>
+            </div>
+
+            <div class="field-group location-group">
+              <label>Anonymous location</label>
+              <button type="button" class="location-button">Add approximate location</button>
+              <p class="field-note">Only a rough location is used to improve regional surveillance.</p>
+            </div>
+
+            <div class="field-group">
+              <label for="notes">Additional notes (optional)</label>
+              <textarea id="notes" name="notes" rows="5" placeholder="Add details about your condition..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-button">Submit anonymous report</button>
+          </form>
+        </div>
+      </section>
+
+      <aside class="info-panel">
+        <div class="info-card">
+          <div class="info-tag">Trusted by local health networks</div>
+          <h3>How this helps</h3>
+          <ul>
+            <li>Reports are anonymized and routed to response teams.</li>
+            <li>Regional trends are monitored in real time.</li>
+            <li>Only basic, non-identifying data is collected.</li>
+          </ul>
+          <div class="info-footer">
+            <span>Next update:</span>
+            <strong>3 min</strong>
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+</body>
+</html>

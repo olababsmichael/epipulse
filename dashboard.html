@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- Leaflet -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <!-- Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+</head>
+<body>
+
+  <!-- ALERTS -->
+  <div class="alerts-stack">
+    <div class="alert-card">
+      <div class="alert-top">
+        <div class="alert-left">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>HIGH PRIORITY ALERT</span>
+        </div>
+
+        <button class="close-btn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="alert-content">
+        <h4>Cholera Case Outbreak</h4>
+        <p>Location: Lagos Mainland • 24 Patients</p>
+      </div>
+    </div>
+  </div>
+
+  <main class="dashboard">
+
+    <section class="topbar">
+      <div class="brand">
+        <div class="logo-box">PH</div>
+        <div>
+          <h2>PULSE HEALTH OPS</h2>
+          <p>National epidemiology command dashboard</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="status-chip success">System Healthy</div>
+        <div class="status-chip warning">5 Active Alerts</div>
+      </div>
+    </section>
+
+    <!-- HEADER -->
+    <section class="hero-card">
+
+      <div class="hero-left">
+        <div class="status-line">
+          <div class="pulse-dot"></div>
+          <span>EPI OPERATIONS CENTER</span>
+        </div>
+
+        <h1>Command & Response Console</h1>
+
+        <p>
+          Centralized epidemiology operations for incident monitoring, case validation, and rapid response coordination across national regions.
+        </p>
+      </div>
+
+      <div class="hero-right">
+
+        <div class="system-load">
+          <p>NETWORK STATUS</p>
+          <h4>95% STABLE</h4>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="sync-box">
+          <p>DATA PIPELINE</p>
+
+          <div class="sync-row">
+            <i class="fa-solid fa-signal sync-icon"></i>
+            <span>Realtime ingestion</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-box blue">
+            <i class="fa-solid fa-virus-covid"></i>
+          </div>
+
+          <span>TOTAL CASES</span>
+        </div>
+
+        <h2>1,240</h2>
+
+        <div class="trend">
+          <div class="trend-dot"></div>
+          <p>+12% VS YESTERDAY</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-box amber">
+            <i class="fa-solid fa-clock"></i>
+          </div>
+
+          <span>PENDING VERIFICATION</span>
+        </div>
+
+        <h2>340</h2>
+
+        <div class="trend">
+          <div class="trend-dot"></div>
+          <p>OUTSTANDING REPORTS</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-box rose">
+            <i class="fa-solid fa-check-to-slot"></i>
+          </div>
+
+          <span>CONFIRMED RESPONSES</span>
+        </div>
+
+        <h2>780</h2>
+
+        <div class="trend">
+          <div class="trend-dot"></div>
+          <p>RESPONSE DISPATCHED</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-top">
+          <div class="icon-box emerald">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+
+          <span>ACTIVE REGIONS</span>
+        </div>
+
+        <h2>32</h2>
+
+        <div class="trend">
+          <div class="trend-dot green"></div>
+          <p>REGIONAL COVERAGE</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- MAIN GRID -->
+    <section class="main-grid">
+
+      <!-- LEFT -->
+      <div class="left-grid">
+
+        <!-- MAP -->
+        <div class="card map-card">
+
+          <div class="card-header">
+
+            <div class="header-left">
+              <div class="header-icon">
+                <i class="fa-solid fa-map-location-dot"></i>
+              </div>
+
+              <div>
+                <h3>OPERATIONAL MAP</h3>
+                <p>Current incident footprint and active zones</p>
+              </div>
+            </div>
+
+            <div class="map-buttons">
+              <button class="active-btn">ACTIVE</button>
+              <button>HEATMAP</button>
+              <button>SATELLITE</button>
+            </div>
+
+          </div>
+
+          <div id="map"></div>
+
+        </div>
+
+        <!-- TREND -->
+        <div class="card trend-card">
+
+          <div class="chart-header">
+            <h3>
+              <i class="fa-solid fa-chart-line"></i>
+              WEEKLY CASE TREND
+            </h3>
+
+            <span>7-day incident trajectory</span>
+          </div>
+
+          <div class="chart-placeholder">
+            <div class="line-chart"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="right-grid">
+
+        <!-- PIE -->
+        <div class="card pie-card">
+
+          <h3>
+            <i class="fa-solid fa-pie-chart"></i>
+            DISEASE DISTRIBUTION
+          </h3>
+
+          <div class="pie-chart"></div>
+
+          <div class="legend-list">
+
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-color green"></div>
+                <span>MALARIA</span>
+              </div>
+
+              <strong>320</strong>
+            </div>
+
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-color blue"></div>
+                <span>CHOLERA</span>
+              </div>
+
+              <strong>190</strong>
+            </div>
+
+            <div class="legend-item">
+              <div class="legend-left">
+                <div class="legend-color orange"></div>
+                <span>TYPHOID</span>
+              </div>
+
+              <strong>140</strong>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- BAR -->
+        <div class="card bar-card">
+
+          <h3>
+            <i class="fa-solid fa-building-columns"></i>
+            REGIONAL INCIDENT SCORE
+          </h3>
+
+          <div class="bars">
+
+            <div class="bar-row">
+              <span>LAGOS</span>
+              <div class="bar">
+                <div class="fill" style="width: 90%;"></div>
+              </div>
+            </div>
+
+            <div class="bar-row">
+              <span>ABUJA</span>
+              <div class="bar">
+                <div class="fill" style="width: 70%;"></div>
+              </div>
+            </div>
+
+            <div class="bar-row">
+              <span>KANO</span>
+              <div class="bar">
+                <div class="fill" style="width: 50%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TABLE -->
+    <section class="table-card">
+
+      <div class="table-header">
+        <div>
+          <h3>Incident Response Ledger</h3>
+          <p>Verified report queue and response status</p>
+        </div>
+
+        <button class="refresh-btn">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </div>
+
+      <div class="table-wrapper">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>DISEASE</th>
+              <th>LOCATION</th>
+              <th>REPORTED CASES</th>
+              <th>REPORT DATE</th>
+              <th>RESPONSE STATUS</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr>
+              <td>
+                <div class="disease-name">
+                  <div class="danger-dot"></div>
+                  <span>CHOLERA</span>
+                </div>
+              </td>
+
+              <td>Lagos Mainland</td>
+
+              <td>24</td>
+
+              <td>May 19, 2026</td>
+
+              <td>
+                <select>
+                  <option>Investigating</option>
+                  <option selected>Confirmed</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="disease-name">
+                  <div class="warning-dot"></div>
+                  <span>TYPHOID</span>
+                </div>
+              </td>
+
+              <td>Ikeja</td>
+
+              <td>11</td>
+
+              <td>May 18, 2026</td>
+
+              <td>
+                <select>
+                  <option selected>Investigating</option>
+                  <option>Confirmed</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td>
+                <div class="disease-name">
+                  <div class="danger-dot"></div>
+                  <span>MALARIA</span>
+                </div>
+              </td>
+
+              <td>Abuja Municipal</td>
+
+              <td>52</td>
+
+              <td>May 18, 2026</td>
+
+              <td>
+                <select>
+                  <option>Investigating</option>
+                  <option selected>Confirmed</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="disease-name">
+                  <div class="warning-dot"></div>
+                  <span>COVID-19</span>
+                </div>
+              </td>
+
+              <td>Kano East</td>
+
+              <td>18</td>
+
+              <td>May 17, 2026</td>
+
+              <td>
+                <select>
+                  <option>Investigating</option>
+                  <option selected>Confirmed</option>
+                  <option>Resolved</option>
+                </select>
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script>
+    const map = L.map('map').setView([9.0820, 8.6753], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.marker([6.5244, 3.3792])
+      .addTo(map)
+      .bindPopup('Cholera Outbreak - Lagos');
+
+    L.marker([9.0765, 7.3986])
+      .addTo(map)
+      .bindPopup('Malaria Cases - Abuja');
+  </script>
+
+</body>
+</html>
