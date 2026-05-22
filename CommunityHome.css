@@ -9,7 +9,7 @@
   --border: #dde7f2;
   --text: #0f172a;
   --muted: #64748b;
-  --accent: #2563eb;
+  --accent: #10b981;
   --success: #059669;
   --shadow: 0 34px 90px rgba(15,23,42,0.08);
 }
@@ -20,8 +20,8 @@
 
 html {
   font-family: 'Inter', system-ui, sans-serif;
-  background: radial-gradient(circle at top left, rgba(37,99,235,0.14), transparent 24%),
-    radial-gradient(circle at top right, rgba(16,185,129,0.1), transparent 22%),
+  background: radial-gradient(circle at top left, rgba(16,185,129,0.12), transparent 24%),
+    radial-gradient(circle at top right, rgba(16,185,129,0.08), transparent 22%),
     var(--bg);
   color: var(--text);
 }
@@ -68,11 +68,11 @@ button {
   display: grid;
   place-items: center;
   border-radius: 22px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  background: linear-gradient(135deg, #10b981, #059669);
   color: white;
   font-weight: 800;
   font-size: 1.1rem;
-  box-shadow: 0 18px 44px rgba(37,99,235,0.2);
+  box-shadow: 0 18px 44px rgba(5,150,105,0.12);
 }
 
 .brand-label {
@@ -95,9 +95,9 @@ button {
   align-items: center;
   padding: 12px 20px;
   border-radius: 999px;
-  border: 1px solid rgba(37,99,235,0.18);
-  background: rgba(37,99,235,0.08);
-  color: #1d4ed8;
+  border: 1px solid rgba(5,150,105,0.18);
+  background: rgba(16,185,129,0.06);
+  color: #059669;
   font-weight: 700;
   font-size: 0.88rem;
 }
@@ -131,7 +131,7 @@ button {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top right, rgba(37,99,235,0.12), transparent 28%);
+  background: radial-gradient(circle at top right, rgba(16,185,129,0.08), transparent 28%);
   pointer-events: none;
 }
 
@@ -140,7 +140,7 @@ button {
   align-items: center;
   padding: 12px 18px;
   border-radius: 999px;
-  background: rgba(37,99,235,0.12);
+  background: rgba(16,185,129,0.12);
   color: var(--accent);
   font-size: 0.75rem;
   font-weight: 700;
@@ -266,9 +266,9 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: rgba(37,99,235,0.3);
+  border-color: rgba(16,185,129,0.3);
   background: #ffffff;
-  box-shadow: 0 0 0 6px rgba(59,130,246,0.08);
+  box-shadow: 0 0 0 6px rgba(16,185,129,0.06);
 }
 
 textarea {
@@ -294,9 +294,9 @@ textarea {
 }
 
 .chip:hover {
-  border-color: rgba(59,130,246,0.2);
-  background: rgba(59,130,246,0.08);
-  color: #1d4ed8;
+  border-color: rgba(16,185,129,0.2);
+  background: rgba(16,185,129,0.06);
+  color: #059669;
 }
 
 .location-group {
@@ -317,8 +317,8 @@ textarea {
 
 .location-button:hover {
   background: #ffffff;
-  border-color: rgba(59,130,246,0.2);
-  box-shadow: 0 8px 24px rgba(59,130,246,0.08);
+  border-color: rgba(16,185,129,0.2);
+  box-shadow: 0 8px 24px rgba(16,185,129,0.08);
 }
 
 .field-note {
@@ -333,14 +333,14 @@ textarea {
   border: none;
   border-radius: 999px;
   padding: 18px;
-  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  background: linear-gradient(135deg, #10b981, #059669);
   color: #ffffff;
   font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   transition: transform 0.2s ease, filter 0.2s ease;
-  box-shadow: 0 20px 40px rgba(37,99,235,0.25);
+  box-shadow: 0 20px 40px rgba(5,150,105,0.12);
 }
 
 .submit-button:hover {
@@ -407,7 +407,7 @@ textarea {
   margin-top: 30px;
   padding: 20px 22px;
   border-radius: 24px;
-  background: rgba(59,130,246,0.08);
+  background: rgba(16,185,129,0.06);
   display: flex;
   justify-content: space-between;
   align-items: center;

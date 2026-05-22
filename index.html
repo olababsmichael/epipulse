@@ -3,177 +3,615 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EpiPulse - Health Reporting Portal</title>
+  <title>EpiPulse Auth</title>
 
-  <!-- Typography & Icons -->
+  <!-- Inter Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:#fff;
+      color:#0f172a;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    .auth-container{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:40px 20px;
+      background:white;
+    }
+
+    .auth-wrapper{
+      width:100%;
+      max-width:520px;
+    }
+
+    .mobile-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin-bottom:24px;
+    }
+
+    .brand-icon{
+      width:42px;
+      height:42px;
+      background:#059669;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:white;
+      box-shadow:0 10px 30px rgba(16,185,129,0.2);
+    }
+
+    .brand-name{
+      font-size:1.4rem;
+      font-weight:700;
+      letter-spacing:-0.04em;
+      color:#0f172a;
+    }
+
+    .header{
+    margin-bottom:24px;
+    }
+
+    .header h2{
+    font-size:1.8rem;
+    line-height:1.2;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    margin-bottom:8px;
+    color:#0f172a;
+    }
+
+    .header p{
+    font-size:0.95rem;
+    line-height:1.5;
+    color:#64748b;
+    font-weight:400;
+    max-width:360px;
+    }
+
+    .role-tabs{
+      display:flex;
+      gap:8px;
+      background:#f8fafc;
+      border:1px solid #f1f5f9;
+      padding:8px;
+      border-radius:22px;
+      margin-bottom:32px;
+      overflow-x:auto;
+    }
+
+    .role-btn{
+      flex:1;
+      border:none;
+      background:transparent;
+      padding:16px 14px;
+      border-radius:16px;
+      font-size:11px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      color:#94a3b8;
+      transition:all .25s ease;
+      white-space:nowrap;
+    }
+
+    .role-btn.active{
+      background:white;
+      color:#059669;
+      border:1px solid rgba(226,232,240,0.8);
+      box-shadow:0 2px 10px rgba(15,23,42,0.04);
+    }
+
+    .role-btn:hover{
+      color:#0f172a;
+    }
+
+    .alert{
+      width:100%;
+      padding:16px;
+      border-radius:18px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      margin-bottom:24px;
+      animation:fadeIn .4s ease;
+    }
+
+    .alert.error{
+      background:#fff1f2;
+      border:1px solid #ffe4e6;
+      color:#be123c;
+    }
+
+    .alert.success{
+      background:#ecfdf5;
+      border:1px solid #d1fae5;
+      color:#065f46;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(-6px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .google-btn{
+      width:100%;
+      border:1px solid #e2e8f0;
+      background:white;
+      border-radius:18px;
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+      cursor:pointer;
+      font-weight:700;
+      color:#334155;
+      transition:all .2s ease;
+      margin-bottom:28px;
+    }
+
+    .google-btn:hover{
+      background:#f8fafc;
+    }
+
+    .divider{
+      position:relative;
+      margin:30px 0;
+      text-align:center;
+    }
+
+    .divider::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:50%;
+      width:100%;
+      height:1px;
+      background:#f1f5f9;
+    }
+
+    .divider span{
+      position:relative;
+      background:white;
+      padding:0 18px;
+      font-size:11px;
+      letter-spacing:.2em;
+      text-transform:uppercase;
+      color:#94a3b8;
+      font-weight:700;
+    }
+
+    form{
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    .input-group{
+      position:relative;
+    }
+
+    .input-group svg{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    width:20px;
+    height:20px;
+    stroke:#94a3b8;
+    pointer-events:none;
+    }
+
+    .input-group input{
+      width:100%;
+      border:none;
+      outline:none;
+      background:#f8fafc;
+      padding:18px 18px 18px 54px;
+      border-radius:18px;
+      font-size:15px;
+      font-weight:600;
+      color:#0f172a;
+      transition:all .25s ease;
+    }
+
+    .input-group input::placeholder{
+      color:#cbd5e1;
+      font-weight:500;
+    }
+
+    .input-group input:focus{
+      background:#fff;
+      box-shadow:
+        0 0 0 4px rgba(16,185,129,0.08),
+        0 0 0 1px rgba(16,185,129,0.2);
+    }
+
+    .forgot{
+      display:flex;
+      justify-content:flex-end;
+      margin-top:-8px;
+    }
+
+    .forgot button{
+      background:none;
+      border:none;
+      color:#059669;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .submit-btn{
+      width:100%;
+      border:none;
+      background:#059669;
+      color:white;
+      border-radius:18px;
+      padding:18px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+      transition:all .25s ease;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 15px 35px rgba(5,150,105,0.18);
+    }
+
+    .submit-btn:hover{
+      background:#047857;
+    }
+
+    .submit-btn:active{
+      transform:scale(.985);
+    }
+
+    .submit-btn.loading{
+      pointer-events:none;
+      opacity:.8;
+    }
+
+    .submit-btn.loading::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.15),
+        transparent
+      );
+      animation:shimmer 1s linear infinite;
+    }
+
+    @keyframes shimmer{
+      100%{
+        left:100%;
+      }
+    }
+
+    .toggle-auth{
+      text-align:center;
+      margin-top:26px;
+    }
+
+    .toggle-auth button{
+      border:none;
+      background:none;
+      color:#64748b;
+      font-size:14px;
+      font-weight:600;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .toggle-auth button:hover{
+      color:#059669;
+    }
+
+    .footer-card{
+      margin-top:70px;
+      background:rgba(248,250,252,0.7);
+      border:1px solid rgba(241,245,249,0.8);
+      border-radius:32px;
+      padding:34px 28px;
+      text-align:center;
+      backdrop-filter:blur(10px);
+    }
+
+    .footer-card p:first-child{
+      font-size:11px;
+      line-height:1.8;
+      color:#94a3b8;
+      max-width:290px;
+      margin:auto;
+      font-weight:500;
+    }
+
+    .footer-bottom{
+      margin-top:24px;
+      padding-top:20px;
+      border-top:1px solid rgba(226,232,240,0.7);
+    }
+
+    .footer-bottom h4{
+      font-size:10px;
+      letter-spacing:.25em;
+      text-transform:uppercase;
+      color:#cbd5e1;
+      margin-bottom:8px;
+      font-weight:800;
+    }
+
+    .footer-bottom p{
+      font-size:10px;
+      color:#94a3b8;
+      font-weight:600;
+    }
+
+    .hidden{
+      display:none;
+    }
+
+    @media(max-width:640px){
+
+    .header h2{
+        font-size:2.4rem;
+    }
+
+    .role-tabs{
+        display:flex;
+        flex-direction:row;
+        overflow-x:auto;
+        scrollbar-width:none;
+        -ms-overflow-style:none;
+        white-space:nowrap;
+        scroll-behavior:smooth;
+        -webkit-overflow-scrolling:touch;
+    }
+
+    .role-tabs::-webkit-scrollbar{
+        display:none;
+    }
+
+    .role-btn{
+        flex:0 0 auto;
+        min-width:max-content;
+        padding:16px 20px;
+    }
+    .role-btn{
+    flex:0 0 48%;
+    scroll-snap-align:start;
+    padding:16px 10px;
+    font-size:10px;
+  }
+    }
+  </style>
 </head>
 <body>
 
-<div class="portal-container">
+<div class="auth-container">
+  <div class="auth-wrapper">
 
-  <!-- BRAND TOP DECK -->
-  <header class="brand-header">
-    <div class="brand-identity">
-      <div class="brand-icon-shield">
-        <i class="fa-solid fa-heart-pulse"></i>
+    <!-- Brand -->
+    <div class="mobile-brand">
+      <div class="brand-icon">
+        <i data-lucide="activity"></i>
       </div>
-      <div class="brand-text">
-        <h1>EpiPulse</h1>
-        <span>Community Health Monitoring System</span>
-      </div>
+      <div class="brand-name">EpiPulse</div>
     </div>
-    <div class="system-status">
-      <span class="pulse-indicator"></span> System Online
-    </div>
-  </header>
 
-  <!-- MAIN SUBMISSION MATRIX -->
-  <main class="workspace-card">
-    
-    <!-- <div class="form-intro">
-      <h2>Health Case Report Form</h2>
-      <p>Report health cases in your community below</p>
-    </div> -->
-    <div class="report-hero">
-      <div class="hero-badge">
-        <i class="fa-solid fa-shield-heart"></i>
-        Community Health Portal
-      </div>
-
-      <h2>Health Case Report Form</h2>
-
-      <p>
-        Quickly report sickness cases in your area to help health officials respond faster.
+    <!-- Header -->
+    <div class="header">
+      <h2 id="authTitle">Portal Access</h2>
+      <p id="authText">
+        Verify your credentials to enter the surveillance dashboard.
       </p>
     </div>
 
-    <form id="epipulseReportForm" novalidate>
-      
-      <!-- GRID SPLIT 1: DISEASE SELECTION & SEVERITY -->
-      <div class="form-grid layout-2-col">
-        
-        <div class="input-node">
-          <label for="diseaseType">Disease or Illness <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-virus-cube field-icon"></i>
-            <select id="diseaseType" required>
-              <option value="" disabled selected>Select illness</option>
-              <option value="Cholera">Cholera (Vibrio cholerae)</option>
-              <option value="Malaria">Malaria (Plasmodium)</option>
-              <option value="Measles">Measles Virus</option>
-              <option value="Tuberculosis">Tuberculosis (MTB)</option>
-              <option value="COVID-19">COVID-19 (SARS-CoV-2)</option>
-              <option value="Lassa Fever">Lassa Hemorrhagic Fever</option>
-              <option value="Other">Other / Novel Outbreak</option>
-            </select>
-          </div>
-          <span class="field-error" id="diseaseTypeError">Select a dynamic clinical condition.</span>
-        </div>
+    <!-- Role Tabs -->
+    <div class="role-tabs">
+      <button class="role-btn active">
+        <i data-lucide="user-circle-2"></i>
+        Community
+      </button>
 
-        <div class="input-node">
-          <label for="severityLevel">How Serious Is It? <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-chart-line field-icon"></i>
-            <select id="severityLevel" required>
-              <option value="" disabled selected>Select severity</option>
-              <option value="Mild">Mild</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Severe">Severe</option>
-            </select>
-          </div>
-          <span class="field-error" id="severityError">Please classify triage severity index.</span>
-        </div>
+      <button class="role-btn">
+        <i data-lucide="hospital"></i>
+        Field Worker
+      </button>
 
-      </div>
+      <button class="role-btn">
+        <i data-lucide="shield-check"></i>
+        Admin Portal
+      </button>
+    </div>
 
-      <!-- GRID SPLIT 2: SYMPTOMS MAP (FULL WIDTH) -->
-      <div class="input-node">
-        <label for="symptoms">Symptoms Seen <span class="req">*</span></label>
-        <div class="input-wrapper text-area-mode">
-          <i class="fa-solid fa-stethoscope field-icon"></i>
-          <textarea id="symptoms" rows="3" placeholder="Describe the symptoms (e.g., high fever, severe vomiting, difficulty breathing...)" required></textarea>
-        </div>
-        <span class="field-error" id="symptomsError">Clinical presentment notes are mandatory.</span>
-      </div>
+    <!-- Success/Error -->
+    <div class="alert success hidden" id="successBox">
+      <i data-lucide="shield-check"></i>
+      <span>Authentication successful.</span>
+    </div>
 
-      <!-- GRID SPLIT 3: GEOLOCATION & VECTOR MATRIX -->
-      <div class="form-grid layout-3-col">
-        
-        <!-- <div class="input-node">
-          <label for="location">Epicenter / Community Location <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-map-location-dot field-icon"></i>
-            <input type="text" id="location" placeholder="e.g., Ward, LGA, Village" required />
-          </div>
-          <span class="field-error" id="locationError">Specify localized cluster anchor.</span>
-        </div> -->
-        <div class="input-node">
-  <label for="location">Location <span class="req">*</span></label>
-  <div class="input-wrapper action-input-mode">
-    <i class="fa-solid fa-map-location-dot field-icon"></i>
-    <input type="text" id="location" placeholder="e.g., Ward, LGA, Village" required />
-    <button type="button" id="geoTriggerBtn" class="field-action-btn" title="Use Current Location">
-      <i class="fa-solid fa-location-crosshairs"></i>
+    <!-- Google -->
+    <button class="google-btn">
+      <svg class="w-5 h-5" width="20" height="20" viewBox="0 0 24 24">
+        <path
+          fill="#4285F4"
+          d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+        />
+        <path
+          fill="#34A853"
+          d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+        />
+        <path
+          fill="#FBBC05"
+          d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"
+        />
+        <path
+          fill="#EA4335"
+          d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+        />
+      </svg>
+
+      Continue with Google
     </button>
-  </div>
-  <span class="field-error" id="locationError">Enter the location</span>
-</div>
 
-        <div class="input-node">
-          <label for="dateOfOccurrence">Date Symptoms Started <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-calendar-check field-icon"></i>
-            <input type="date" id="dateOfOccurrence" required />
-          </div>
-          <span class="field-error" id="dateError">Select the date</span>
-        </div>
+    <!-- Divider -->
+    <div class="divider">
+      <span>or</span>
+    </div>
 
-        <div class="input-node">
-          <label for="numAffected">Number of People Affected <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-calculator field-icon"></i>
-            <input type="number" id="numAffected" min="1" placeholder="Cases detected" required />
-          </div>
-          <span class="field-error" id="numAffectedError">Enter number of affected people</span>
-        </div>
+    <!-- Form -->
+    <form>
 
+      <!-- Signup Fields -->
+      <div class="input-group signup-only hidden">
+        <i data-lucide="user-circle-2"></i>
+        <input type="text" placeholder="Full Name">
       </div>
 
-      <!-- GRID SPLIT 4: SUPPLEMENTARY TRANSMISSION NOTES -->
-      <div class="input-node">
-        <label for="comments">Additional Notes</label>
-        <div class="input-wrapper text-area-mode">
-          <i class="fa-regular fa-clipboard field-icon"></i>
-          <textarea id="comments" rows="2" placeholder="Detail surrounding conditions, nearby health center situation, vaccine availability, etc."></textarea>
-        </div>
+      <div class="input-group signup-only hidden">
+        <i data-lucide="hospital"></i>
+        <input type="tel" placeholder="Phone Number">
       </div>
 
-      <!-- STRUCTURAL FORM CTAS -->
-      <div class="action-deck">
-        <button type="reset" class="btn-secondary">Clear Form</button>
-        <button type="submit" class="btn-primary">
-          <span>Submit Report</span> <i class="fa-solid fa-share-nodes"></i>
-        </button>
+      <div class="input-group signup-only hidden">
+        <i data-lucide="globe"></i>
+        <input type="text" placeholder="Assigned LGA (e.g Abuja Municipal)">
       </div>
+
+      <!-- Email -->
+      <div class="input-group">
+        <i data-lucide="mail"></i>
+        <input type="email" placeholder="name@institution.gov">
+      </div>
+
+      <!-- Password -->
+      <div class="input-group">
+        <i data-lucide="lock"></i>
+        <input type="password" placeholder="••••••••">
+      </div>
+
+      <!-- Forgot -->
+      <div class="forgot">
+        <button type="button">Forgot Password?</button>
+      </div>
+
+      <!-- Submit -->
+      <button class="submit-btn" id="submitBtn">
+        Sign In
+      </button>
 
     </form>
 
-  </main>
+    <!-- Toggle -->
+    <div class="toggle-auth">
+      <button id="toggleBtn">
+        Don't have an account? Create one
+      </button>
+    </div>
 
-  <!-- INTEGRITY DATA FOOTER -->
-  <footer class="system-footer">
-    <div class="footer-meta">
-      <strong>© 2026 EpiPulse</strong>
-    </div>      
-  </footer>
+    <!-- Footer -->
+    <div class="footer-card">
+      <p>
+        Centralized Data Intelligence. EpiPulse uses advanced institutional encryption for security compliance.
+      </p>
 
+      <div class="footer-bottom">
+        <h4>© 2026 EpiPulse Ecosystem</h4>
+        <p>National Health Surveillance Authority</p>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+  lucide.createIcons();
+
+  const toggleBtn = document.getElementById("toggleBtn");
+  const authTitle = document.getElementById("authTitle");
+  const authText = document.getElementById("authText");
+  const submitBtn = document.getElementById("submitBtn");
+
+  const signupFields = document.querySelectorAll(".signup-only");
+
+  let isSignup = false;
+
+  toggleBtn.addEventListener("click", () => {
+
+    isSignup = !isSignup;
+
+    signupFields.forEach(field => {
+      field.classList.toggle("hidden");
+    });
+
+    if(isSignup){
+      authTitle.textContent = "Create Account";
+      authText.textContent =
+        "Join the surveillance network and contribute to public health.";
+
+      submitBtn.textContent = "Create Account";
+
+      toggleBtn.textContent =
+        "Already have an account? Sign In";
+    }else{
+      authTitle.textContent = "Portal Access";
+      authText.textContent =
+        "Verify your credentials to enter the surveillance dashboard.";
+
+      submitBtn.textContent = "Sign In";
+
+      toggleBtn.textContent =
+        "Don't have an account? Create one";
+    }
+  });
+
+  // Role selection
+  const roleButtons = document.querySelectorAll(".role-btn");
+
+  roleButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      roleButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+
+</script>
+
 </body>
 </html>

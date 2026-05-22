@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard</title>
 
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="styles.css"/>
 
   <!-- Leaflet -->
   <link
@@ -48,8 +48,8 @@
       <div class="brand">
         <div class="logo-box">PH</div>
         <div>
-          <h2>PULSE HEALTH OPS</h2>
-          <p>National epidemiology command dashboard</p>
+          <h2>Pulse Health</h2>
+          <p>Community disease monitoring system</p>
         </div>
       </div>
 
@@ -65,35 +65,16 @@
       <div class="hero-left">
         <div class="status-line">
           <div class="pulse-dot"></div>
-          <span>EPI OPERATIONS CENTER</span>
+          <span>Community Surveillance</span>
         </div>
 
-        <h1>Command & Response Console</h1>
+        <h1>Disease Monitoring Dashboard</h1>
 
         <p>
-          Centralized epidemiology operations for incident monitoring, case validation, and rapid response coordination across national regions.
+          Track reported cases, affected communities, and response activity to support timely local action.
         </p>
       </div>
 
-      <div class="hero-right">
-
-        <div class="system-load">
-          <p>NETWORK STATUS</p>
-          <h4>95% STABLE</h4>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="sync-box">
-          <p>DATA PIPELINE</p>
-
-          <div class="sync-row">
-            <i class="fa-solid fa-signal sync-icon"></i>
-            <span>Realtime ingestion</span>
-          </div>
-        </div>
-
-      </div>
     </section>
 
     <!-- STATS -->
@@ -105,7 +86,7 @@
             <i class="fa-solid fa-virus-covid"></i>
           </div>
 
-          <span>TOTAL CASES</span>
+          <span>Total Cases</span>
         </div>
 
         <h2>1,240</h2>
@@ -122,7 +103,7 @@
             <i class="fa-solid fa-clock"></i>
           </div>
 
-          <span>PENDING VERIFICATION</span>
+          <span>Pending Reports</span>
         </div>
 
         <h2>340</h2>
@@ -156,7 +137,7 @@
             <i class="fa-solid fa-globe"></i>
           </div>
 
-          <span>ACTIVE REGIONS</span>
+          <span>Active Regions</span>
         </div>
 
         <h2>32</h2>
@@ -455,7 +436,25 @@
     L.marker([9.0765, 7.3986])
       .addTo(map)
       .bindPopup('Malaria Cases - Abuja');
+     
   </script>
+  <script>
+
+  const closeBtn = document.querySelector('.close-btn');
+  const alertCard = document.querySelector('.alert-card');
+
+  closeBtn.addEventListener('click', () => {
+
+    alertCard.style.opacity = '0';
+    alertCard.style.transform = 'translateX(80px)';
+
+    setTimeout(() => {
+      alertCard.style.display = 'none';
+    }, 300);
+
+  });
+
+</script>
 
 </body>
 </html>
