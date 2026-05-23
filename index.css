@@ -17,7 +17,7 @@
       display:flex;
       justify-content:center;
       align-items:center;
-      padding:40px 20px;
+      padding:48px 24px;
       background:white;
     }
 
@@ -163,9 +163,19 @@
       transition:all .2s ease;
       margin-bottom:28px;
     }
+    .google-btn,
+    .submit-btn{
+    padding:16px;
+    border-radius:16px;
+    }
 
     .google-btn:hover{
       background:#f8fafc;
+    }
+    html,
+    body{
+    width:100%;
+    overflow-x:hidden;
     }
 
     .divider{
@@ -221,9 +231,9 @@
       border:none;
       outline:none;
       background:#f8fafc;
-      padding:18px 18px 18px 54px;
-      border-radius:18px;
-      font-size:15px;
+      padding:16px 16px 16px 50px;
+      border-radius:16px;
+      font-size:16px;
       font-weight:600;
       color:#0f172a;
       transition:all .25s ease;
@@ -373,7 +383,8 @@
     @media(max-width:640px){
 
     .header h2{
-        font-size:2.4rem;
+        font-size:2rem;
+        line-height:1.1;
     }
 
     .role-tabs{
@@ -392,14 +403,12 @@
     }
 
     .role-btn{
-        flex:0 0 auto;
-        min-width:max-content;
-        padding:16px 20px;
-    }
-    .role-btn{
     flex:0 0 48%;
     scroll-snap-align:start;
     padding:16px 10px;
     font-size:10px;
   }
+    .auth-container{
+      padding:24px 18px 40px;
+}
     }
