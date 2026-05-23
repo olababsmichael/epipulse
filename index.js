@@ -164,9 +164,9 @@ function initializeBackendFlow() {
 
           setTimeout(() => {
             if (verifiedUserRole === "admin" || verifiedUserRole === "field_worker") {
-              window.location.href = "dashboard.html";
+              window.location.href = "/dashboard.html";
             } else {
-              window.location.href = "CommunityHome.html";
+              window.location.href = "/CommunityHome.html";
             }
           }, 1200);
         }
