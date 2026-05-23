@@ -128,7 +128,7 @@ function initializeBackendFlow() {
 
           if (error) throw error;
 
-          displayStatusMessage("success", "Profile created successfully! Please check your email inbox to verify.");
+          displayStatusMessage("success", "Profile created successfully!");
           mainForm.reset();
           if (isSignup) setAuthMode(false); // Return layout configuration view back to sign-in state
 
