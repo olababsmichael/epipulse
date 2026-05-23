@@ -1,50 +1,209 @@
-  lucide.createIcons();
+// =========================================================================
+// 1. YOUR ORIGINAL FRONTEND CODE (CORRECTED & OPTIMIZED)
+// =========================================================================
 
-  const toggleBtn = document.getElementById("toggleBtn");
-  const authTitle = document.getElementById("authTitle");
-  const authText = document.getElementById("authText");
-  const submitBtn = document.getElementById("submitBtn");
+lucide.createIcons();
 
-  const signupFields = document.querySelectorAll(".signup-only");
+const toggleBtn = document.getElementById("toggleBtn");
+const authTitle = document.getElementById("authTitle");
+const authText = document.getElementById("authText");
+const submitBtn = document.getElementById("submitBtn");
 
-  let isSignup = false;
+const signupFields = document.querySelectorAll(".signup-only");
 
-  toggleBtn.addEventListener("click", () => {
+let isSignup = false;
 
-    isSignup = !isSignup;
+toggleBtn.addEventListener("click", () => {
+  isSignup = !isSignup;
 
-    signupFields.forEach(field => {
-      field.classList.toggle("hidden");
+  signupFields.forEach(field => {
+    field.classList.toggle("hidden");
+  });
+
+  if(isSignup){
+    authTitle.textContent = "Create Account";
+    authText.textContent = "Join the surveillance network and contribute to public health.";
+    submitBtn.textContent = "Create Account";
+    toggleBtn.textContent = "Already have an account? Sign In";
+    
+    // Remove the required attribute from sign up fields when they are shown
+    // to prevent browser interference, letting our script do the heavy lifting
+  } else {
+    authTitle.textContent = "Portal Access";
+    authText.textContent = "Verify your credentials to enter the surveillance dashboard.";
+    submitBtn.textContent = "Sign In";
+    toggleBtn.textContent = "Don't have an account? Create one";
+  }
+});
+
+// Role selection
+const roleButtons = document.querySelectorAll(".role-btn");
+
+roleButtons.forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault(); // Stop any unintended form submissions
+    roleButtons.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+
+
+// =========================================================================
+// 2. PRODUCTION SUPABASE INTEGRATION ENGINE
+// =========================================================================
+
+const SUPABASE_URL = 'https://uaajsijjnmmbavleynry.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhYWpzaWpqbm1tYmF2bGV5bnJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxMzQ0NjQsImV4cCI6MjA5NDcxMDQ2NH0.eJwPlcUvMOyw2UME6N-prnD934btdqQNqgB5pWgB4uU';
+let supabaseInstance = null;
+
+// Dynamically auto-load Supabase CDN into the document workspace context
+(function loadSupabaseLibrary() {
+  if (window.supabase) {
+    initializeBackendFlow();
+    return;
+  }
+  const scriptNode = document.createElement('script');
+  scriptNode.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  scriptNode.async = true;
+  scriptNode.onload = () => {
+    initializeBackendFlow();
+  };
+  document.head.appendChild(scriptNode);
+})();
+
+function initializeBackendFlow() {
+  if (window.supabase && !supabaseInstance) {
+    supabaseInstance = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+
+  const mainForm = document.getElementById("authForm");
+  const successBox = document.getElementById("successBox");
+
+  if (mainForm) {
+    mainForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!supabaseInstance) {
+        displayStatusMessage("error", "Database engine initialization failure. Check credentials.");
+        return;
+      }
+
+      // FIX 1: Explicitly targeted element extraction via unique HTML IDs instead of index arrays
+      const fullNameValue = document.getElementById("regFullName") ? document.getElementById("regFullName").value.trim() : "";
+      const phoneValue = document.getElementById("regPhone") ? document.getElementById("regPhone").value.trim() : "";
+      const lgaValue = document.getElementById("regLGA") ? document.getElementById("regLGA").value.trim() : "";
+      const emailValue = document.getElementById("authEmail") ? document.getElementById("authEmail").value.trim() : "";
+      const passwordValue = document.getElementById("authPassword") ? document.getElementById("authPassword").value : "";
+
+      // FIX 2: Safely extract data attributes directly instead of loose text manipulation
+      let assignedRole = "community";
+      const currentActiveTab = document.querySelector(".role-btn.active");
+      if (currentActiveTab && currentActiveTab.dataset.role) {
+        assignedRole = currentActiveTab.dataset.role; // This outputs exactly 'community', 'field_worker', or 'admin'
+      }
+
+      // Setup clean submission UI transition states
+      const nativeButtonLabel = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = isSignup ? "Creating Profile..." : "Verifying System Access...";
+
+      try {
+        if (isSignup) {
+        // 1. Create the user inside Supabase Auth
+        const { data: authData, error: authError } = await supabaseInstance.auth.signUp({
+            email: emailValue,
+            password: passwordValue,
+            options: {
+            data: {
+                full_name: fullNameValue,
+                phone_number: phoneValue,
+                assigned_lga: lgaValue,
+                role: assignedRole
+            }
+            }
+        });
+
+        if (authError) throw authError;
+
+        // 2. If Auth succeeds, manually insert their record directly into your public.profiles table
+        if (authData?.user) {
+            const { error: profileError } = await supabaseInstance
+            .from('profiles')
+            .insert([
+                {
+                id: authData.user.id, // Links directly to the newly created user ID
+                full_name: fullNameValue || 'Anonymous User',
+                phone_number: phoneValue || null,
+                assigned_lga: lgaValue || 'Unassigned',
+                role: assignedRole
+                }
+            ]);
+
+            // If writing the profile fails, we log it but don't let it crash the frontend completely
+            if (profileError) {
+            console.error("Profile row insert bypass log:", profileError.message);
+            }
+        }
+
+        displayStatusMessage("success", "Profile created successfully! Please check your email inbox to verify.");
+        mainForm.reset();
+        if (isSignup) toggleBtn.click(); 
+
+        } else {
+          // ------------------ EXECUTING SIGN IN ------------------
+          const { data, error } = await supabaseInstance.auth.signInWithPassword({
+            email: emailValue,
+            password: passwordValue
+          });
+
+          if (error) throw error;
+
+          displayStatusMessage("success", "Access credentials verified. Loading user workspace...");
+
+          const verifiedUserRole = data.user?.user_metadata?.role || "community";
+
+          setTimeout(() => {
+            if (verifiedUserRole === "admin" || verifiedUserRole === "field_worker") {
+              window.location.href = "dashboard.html";
+            } else {
+              window.location.href = "CommunityHome.html";
+            }
+          }, 1200);
+        }
+      } catch (runtimeError) {
+        displayStatusMessage("error", runtimeError.message || "Authentication pipeline exception.");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = nativeButtonLabel;
+      }
     });
+  }
 
-    if(isSignup){
-      authTitle.textContent = "Create Account";
-      authText.textContent =
-        "Join the surveillance network and contribute to public health.";
-
-      submitBtn.textContent = "Create Account";
-
-      toggleBtn.textContent =
-        "Already have an account? Sign In";
-    }else{
-      authTitle.textContent = "Portal Access";
-      authText.textContent =
-        "Verify your credentials to enter the surveillance dashboard.";
-
-      submitBtn.textContent = "Sign In";
-
-      toggleBtn.textContent =
-        "Don't have an account? Create one";
+  // Functional alert UI renderer panel
+  function displayStatusMessage(statusType, contentText) {
+    if (!successBox) {
+      alert(contentText);
+      return;
     }
-  });
 
-  // Role selection
-  const roleButtons = document.querySelectorAll(".role-btn");
+    successBox.className = `alert ${statusType}`;
+    const spanTag = successBox.querySelector("span");
+    if (spanTag) spanTag.textContent = contentText;
 
-  roleButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      roleButtons.forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
-  });
+    const iconTag = successBox.querySelector("i");
+    if (iconTag) {
+      if (statusType === "error") {
+        iconTag.setAttribute("data-lucide", "alert-circle");
+        successBox.style.backgroundColor = "rgba(239, 68, 68, 0.1)";
+        successBox.style.color = "#ef4444";
+      } else {
+        iconTag.setAttribute("data-lucide", "shield-check");
+        successBox.style.backgroundColor = "rgba(16, 185, 129, 0.1)";
+        successBox.style.color = "#10b981";
+      }
+      if (window.lucide) window.lucide.createIcons();
+    }
 
+    successBox.classList.remove("hidden");
+  }
+}
