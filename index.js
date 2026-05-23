@@ -13,28 +13,31 @@ const signupFields = document.querySelectorAll(".signup-only");
 
 let isSignup = false;
 
-toggleBtn.addEventListener("click", () => {
-  isSignup = !isSignup;
+function setAuthMode(signupMode) {
+  isSignup = signupMode;
 
   signupFields.forEach(field => {
-    field.classList.toggle("hidden");
+    field.classList.toggle("hidden", !signupMode);
   });
 
-  if(isSignup){
+  if (isSignup) {
     authTitle.textContent = "Create Account";
     authText.textContent = "Join the surveillance network and contribute to public health.";
     submitBtn.textContent = "Create Account";
     toggleBtn.textContent = "Already have an account? Sign In";
-    
-    // Remove the required attribute from sign up fields when they are shown
-    // to prevent browser interference, letting our script do the heavy lifting
   } else {
     authTitle.textContent = "Portal Access";
     authText.textContent = "Verify your credentials to enter the surveillance dashboard.";
     submitBtn.textContent = "Sign In";
     toggleBtn.textContent = "Don't have an account? Create one";
   }
+}
+
+toggleBtn.addEventListener("click", () => {
+  setAuthMode(!isSignup);
 });
+
+setAuthMode(false);
 
 // Role selection
 const roleButtons = document.querySelectorAll(".role-btn");
@@ -109,45 +112,25 @@ function initializeBackendFlow() {
 
       try {
         if (isSignup) {
-        // 1. Create the user inside Supabase Auth
-        const { data: authData, error: authError } = await supabaseInstance.auth.signUp({
+          // ------------------ EXECUTING SIGN UP ------------------
+          const { data, error } = await supabaseInstance.auth.signUp({
             email: emailValue,
             password: passwordValue,
             options: {
-            data: {
+              data: {
                 full_name: fullNameValue,
                 phone_number: phoneValue,
                 assigned_lga: lgaValue,
                 role: assignedRole
+              }
             }
-            }
-        });
+          });
 
-        if (authError) throw authError;
+          if (error) throw error;
 
-        // 2. If Auth succeeds, manually insert their record directly into your public.profiles table
-        if (authData?.user) {
-            const { error: profileError } = await supabaseInstance
-            .from('profiles')
-            .insert([
-                {
-                id: authData.user.id, // Links directly to the newly created user ID
-                full_name: fullNameValue || 'Anonymous User',
-                phone_number: phoneValue || null,
-                assigned_lga: lgaValue || 'Unassigned',
-                role: assignedRole
-                }
-            ]);
-
-            // If writing the profile fails, we log it but don't let it crash the frontend completely
-            if (profileError) {
-            console.error("Profile row insert bypass log:", profileError.message);
-            }
-        }
-
-        displayStatusMessage("success", "Profile created successfully! Please check your email inbox to verify.");
-        mainForm.reset();
-        if (isSignup) toggleBtn.click(); 
+          displayStatusMessage("success", "Profile created successfully! Please check your email inbox to verify.");
+          mainForm.reset();
+          if (isSignup) setAuthMode(false); // Return layout configuration view back to sign-in state
 
         } else {
           // ------------------ EXECUTING SIGN IN ------------------
@@ -164,9 +147,9 @@ function initializeBackendFlow() {
 
           setTimeout(() => {
             if (verifiedUserRole === "admin" || verifiedUserRole === "field_worker") {
-              window.location.href = "/dashboard.html";
+              window.location.href = "dashboard.html";
             } else {
-              window.location.href = "/CommunityHome.html";
+              window.location.href = "CommunityHome.html";
             }
           }, 1200);
         }
@@ -174,7 +157,7 @@ function initializeBackendFlow() {
         displayStatusMessage("error", runtimeError.message || "Authentication pipeline exception.");
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = nativeButtonLabel;
+        submitBtn.textContent = isSignup ? "Create Account" : "Sign In";
       }
     });
   }
