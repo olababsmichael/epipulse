@@ -50,6 +50,24 @@ roleButtons.forEach(btn => {
   });
 });
 
+const rootElement = document.documentElement;
+let bgTicking = false;
+
+function updateParallaxBackground() {
+  const scrollY = window.scrollY || window.pageYOffset;
+  const parallaxOffset = Math.round(scrollY * 0.06);
+  rootElement.style.setProperty('--bg-parallax-y', `${parallaxOffset}px`);
+  bgTicking = false;
+}
+
+window.addEventListener('scroll', () => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!bgTicking) {
+    window.requestAnimationFrame(updateParallaxBackground);
+    bgTicking = true;
+  }
+}, { passive: true });
+
 
 // =========================================================================
 // 2. PRODUCTION SUPABASE INTEGRATION ENGINE

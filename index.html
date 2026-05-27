@@ -1,157 +1,343 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>EpiPulse Auth</title>
-
-  <!-- Inter Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link rel="stylesheet" href="index.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yabatech - Disease Reporting System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dis.css">
 </head>
 <body>
 
-<div class="auth-container">
-  <div class="auth-wrapper">
 
-    <!-- Brand -->
-    <div class="mobile-brand">
-      <div class="brand-icon">
-        <i data-lucide="activity"></i>
-      </div>
-      <div class="brand-name">EpiPulse</div>
+    <header class="main-header">
+        <div class="logo-section">
+            <div class="logo-icon-wrapper">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 12 7 12 9 7 13 17 15 12 21 12" />
+                </svg>
+            </div>
+            <div>
+                <span class="logo-text-primary">Health Guard</span>
+                <span class="logo-text-secondary">Yabatech Disease Reporting System</span>
+            </div>
+        </div>
+        <nav class="nav-actions">
+            <a href="Auth.html" class="login-btn" id="loginBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+
+            </a>
+        </nav>
+    </header>
+
+    <main class="app-container">
+        <div class="hero-grid-layout">
+            
+            <section class="hero-info-panel">
+                <h1 class="hero-title">
+                    Report Today,<br>
+                    <span class="accent-text">Protect</span><br>
+                    Tomorrow
+                </h1>
+                
+                <div class="visual-separator"></div>
+
+                <p class="description-text">
+                    Take control of public safety. Securely and quickly report emerging biological data trends and infectious vectors to shield the campus community through advanced analytics.
+                </p>
+
+                <a href="CommunityHome.html" class="report-cta-card">
+                    <div class="card-body">
+                        <div class="card-icon-box">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                        </div>
+                        <div class="card-content">
+                            <h3>File Official Report</h3>
+                            <p>Directly transfer data to health administration channels →</p>
+                        </div>
+                    </div>
+                </a>
+
+                <div class="badge-row">
+                    <div class="badge-item">
+                        <div class="badge-icon icon-green">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        </div>
+                        <span class="badge-text">Instant Sync</span>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon icon-blue">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                        </div>
+                        <span class="badge-text">Real-time Tracker</span>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon icon-purple">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-7"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                        </div>
+                        <span class="badge-text">Campus Alerts</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- <section class="interactive-form-panel">
+                <div class="doctor-wrapper">
+                    <div class="doctor-frame-decor">
+                        <div class="stethoscope-art"></div>
+                    </div>
+                    
+                    <div class="form-wrapper-mock">
+                        <div class="form-header">
+                            <div class="form-icon-pulse">+</div>
+                            <h2 class="form-title">Disease Form Blueprint</h2>
+                            <span class="mock-badge">PREVIEW ONLY</span>
+                        </div>
+
+                        <div class="form-fields">
+                            <div class="input-group">
+                                <label class="field-label">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path></svg> 
+                                    Disease Identity
+                                </label>
+                                <input type="text" value="Influenza Vector Variant A" readonly tabindex="-1">
+                            </div>
+
+                            <div class="input-group">
+                                <label class="field-label">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> 
+                                    Observed Symptoms
+                                </label>
+                                <input type="text" value="Acute pyrexia, continuous cough" readonly tabindex="-1">
+                            </div>
+
+                            <div class="input-group">
+                                <label class="field-label">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path></svg> 
+                                    Incident Location
+                                </label>
+                                <input type="text" value="Yabatech Complex Hall B" readonly tabindex="-1">
+                            </div>
+
+                            <div class="input-group">
+                                <label class="field-label">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"></rect></svg> 
+                                    Date of Onset
+                                </label>
+                                <input type="text" value="2026-05-26" readonly tabindex="-1">
+                            </div>
+
+                            <div class="input-group">
+                                <label class="field-label">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="21" y1="6" x2="3" y2="6"></line></svg> 
+                                    Additional Context
+                                </label>
+                                <textarea rows="2" readonly tabindex="-1">Patient metrics recorded inside campus jurisdiction parameters.</textarea>
+                            </div>
+
+                            <button type="button" class="submit-btn graphic-disabled">System Locked</button>
+                        </div>
+                    </div>
+                </div>
+            </section> -->
+            <section class="interactive-form-panel">
+
+            <div class="trust-panel">
+
+                <div class="trust-icon-wrapper">
+                    <div class="shield-glow">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L4 5v6c0 5.55 3.84 10.74 8 12
+                                    4.16-1.26 8-6.45 8-12V5l-8-3z">
+                            </path>
+                            <path d="M9 12l2 2 4-4"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <h2 class="trust-title">
+                    Protect the Campus Community
+                </h2>
+
+                <p class="trust-description">
+                    Early health reporting allows faster intervention,
+                    improved outbreak prevention, and a safer learning
+                    environment for everyone at Yabatech.
+                </p>
+
+                <div class="trust-features">
+
+                    <div class="trust-feature-card">
+                        <span class="feature-icon">✔</span>
+                        <span>Secure Reporting</span>
+                    </div>
+
+                    <div class="trust-feature-card">
+                        <span class="feature-icon">✔</span>
+                        <span>Confidential Submission</span>
+                    </div>
+
+                    <div class="trust-feature-card">
+                        <span class="feature-icon">✔</span>
+                        <span>Rapid Health Response</span>
+                    </div>
+
+                    <div class="trust-feature-card">
+                        <span class="feature-icon">✔</span>
+                        <span>Campus-wide Protection</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+        
+
+        </div>
+    </main>
+<!-- <section class="interactive-form-panel">
+
+    <div class="awareness-panel">
+
+        <div class="awareness-header">
+            <div class="alert-pulse">!</div>
+
+            <h2 class="awareness-title">
+                When Should You Report?
+            </h2>
+        </div>
+
+        <p class="awareness-description">
+            Reporting early symptoms or unusual health trends
+            helps reduce risk and supports faster medical response.
+        </p>
+
+        <div class="symptom-list">
+
+            <div class="symptom-item">
+                <div class="symptom-dot"></div>
+                Persistent fever or fatigue
+            </div>
+
+            <div class="symptom-item">
+                <div class="symptom-dot"></div>
+                Continuous coughing or breathing issues
+            </div>
+
+            <div class="symptom-item">
+                <div class="symptom-dot"></div>
+                Multiple students showing similar symptoms
+            </div>
+
+            <div class="symptom-item">
+                <div class="symptom-dot"></div>
+                Suspected infectious outbreaks on campus
+            </div>
+
+        </div>
+
+        <div class="awareness-footer">
+            Your report could help prevent wider transmission.
+        </div>
+
     </div>
 
-    <!-- Header -->
-    <div class="header">
-      <h2 id="authTitle">Portal Access</h2>
-      <p id="authText">
-        Verify your credentials to enter the surveillance dashboard.
-      </p>
-    </div>
+</section> -->
+<section class="awareness-section">
 
-    <!-- Role Tabs -->
-    <div class="role-tabs">
-      <button class="role-btn active" data-role="community">
-        <i data-lucide="user-circle-2"></i>
-        Community
-      </button>
+    <div class="awareness-content">
 
-      <button class="role-btn" data-role="field_worker">
-        <i data-lucide="hospital"></i>
-        Field Worker
-      </button>
+        <div class="awareness-left">
 
-      <button class="role-btn" data-role="admin">
-        <i data-lucide="shield-check"></i>
-        Admin Portal
-      </button>
-    </div>
+            <div class="awareness-tag">
+                Campus Health Awareness
+            </div>
 
-    <!-- Success/Error -->
-    <div class="alert success hidden" id="successBox">
-      <i data-lucide="shield-check"></i>
-      <span>Authentication successful.</span>
-    </div>
+            <h2 class="awareness-main-title">
+                When Should You Report?
+            </h2>
 
-    <!-- Google -->
-    <button class="google-btn" type="button">
-      <svg class="w-5 h-5" width="20" height="20" viewBox="0 0 24 24">
-        <path
-          fill="#4285F4"
-          d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
-        />
-        <path
-          fill="#34A853"
-          d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
-        />
-        <path
-          fill="#FBBC05"
-          d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"
-        />
-        <path
-          fill="#EA4335"
-          d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
-        />
-      </svg>
+            <p class="awareness-main-description">
+                Early reporting helps reduce outbreaks and enables
+                faster medical response across the Yabatech community.
+            </p>
 
-      Continue with Google
-    </button>
+            <div class="symptom-grid">
 
-    <!-- Divider -->
-    <div class="divider">
-      <span>or</span>
-    </div>
+                <div class="symptom-card">
+                    <div class="symptom-icon"></div>
+                    <span>Persistent fever or fatigue</span>
+                </div>
 
-    <!-- Form -->
-    <form id="authForm">
+                <div class="symptom-card">
+                    <div class="symptom-icon"></div>
+                    <span>Continuous coughing or breathing issues</span>
+                </div>
 
-      <!-- Signup Fields -->
-      <div class="input-group signup-only hidden">
-        <i data-lucide="user-circle-2"></i>
-        <input id="regFullName" type="text" placeholder="Full Name">
-      </div>
+                <div class="symptom-card">
+                    <div class="symptom-icon"></div>
+                    <span>Multiple students with similar symptoms</span>
+                </div>
 
-      <div class="input-group signup-only hidden">
-        <i data-lucide="hospital"></i>
-        <input id="regPhone" type="tel" placeholder="Phone Number">
-      </div>
+                <div class="symptom-card">
+                    <div class="symptom-icon"></div>
+                    <span>Suspected infectious outbreaks</span>
+                </div>
 
-      <div class="input-group signup-only hidden">
-        <i data-lucide="globe"></i>
-        <input id="regLGA" type="text" placeholder="Assigned LGA (e.g Abuja Municipal)">
-      </div>
+            </div>
 
-      <!-- Email -->
-      <div class="input-group">
-        <i data-lucide="mail"></i>
-        <input id="authEmail" type="email" placeholder="name@institution.gov">
-      </div>
+        </div>
 
-      <!-- Password -->
-      <div class="input-group">
-        <i data-lucide="lock"></i>
-        <input id="authPassword" type="password" placeholder="••••••••">
-      </div>
+        <div class="awareness-right">
 
-      <!-- Forgot -->
-      <div class="forgot">
-        <button type="button">Forgot Password?</button>
-      </div>
+<svg class="awareness-illustration" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
 
-      <!-- Submit -->
-      <button class="submit-btn" id="submitBtn" type="submit">
-        Sign In
-      </button>
+    <!-- Background Glow -->
+    <circle cx="250" cy="250" r="220" fill="rgba(37,99,235,0.06)" />
+    <circle cx="250" cy="250" r="160" fill="rgba(16,185,129,0.05)" />
 
-    </form>
+    <!-- Doctor Head -->
+    <circle cx="250" cy="170" r="60" fill="#E2E8F0"/>
 
-    <!-- Toggle -->
-    <div class="toggle-auth">
-      <button id="toggleBtn" type="button">
-        Don't have an account? Create one
-      </button>
-    </div>
+    <!-- Body -->
+    <rect x="190" y="230" width="120" height="160" rx="30" fill="#2563EB"/>
 
-    <!-- Footer -->
-    <div class="footer-card">
-      <p>
-        Centralized Data Intelligence. EpiPulse uses advanced institutional encryption for security compliance.
-      </p>
+    <!-- Stethoscope -->
+    <path d="M210 250 C180 300, 180 340, 220 360 C260 380, 300 340, 290 300"
+          stroke="#0F172A" stroke-width="6" stroke-linecap="round"/>
 
-      <div class="footer-bottom">
-        <h4>© 2026 EpiPulse Ecosystem</h4>
-        <p>National Health Surveillance Authority</p>
-      </div>
-    </div>
+    <circle cx="220" cy="360" r="10" fill="#10B981"/>
 
-  </div>
+    <!-- Shield Icon -->
+    <path d="M360 180 L400 200 V250 C400 290 380 320 360 330
+             C340 320 320 290 320 250 V200 Z"
+          fill="rgba(37,99,235,0.15)" stroke="#2563EB" stroke-width="3"/>
+
+    <!-- Check mark -->
+    <path d="M340 250 L355 265 L385 235"
+          stroke="#10B981" stroke-width="5" stroke-linecap="round"/>
+
+    <!-- Virus Icon (small abstract) -->
+    <circle cx="120" cy="320" r="18" fill="rgba(239,68,68,0.15)" />
+    <path d="M120 295 L120 305 M120 335 L120 345 M95 320 L105 320 M135 320 L145 320"
+          stroke="#EF4444" stroke-width="3" stroke-linecap="round"/>
+
+</svg>
+
 </div>
-<script src="index.js"></script>
+
+    </div>
+
+</section>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 Yabatech Medical Surveillance Ecosystem.</p>
+    </footer>
+
+    <script src="app.js"></script>
 </body>
 </html>
