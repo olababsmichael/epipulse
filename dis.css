@@ -1321,15 +1321,3 @@ body {
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
-.badge-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(4px);
-    transition: transform 0.2s ease, background-color 0.2s ease;
-    cursor: default;
-}
-
-.badge-item:hover {
-    transform: translateY(-2px);
-    background-color: #ffffff;
-    border-color: rgba(37, 99, 235, 0.2);
-}
