@@ -26,9 +26,9 @@
     
 } */
 /* --- Updated Body with Premium Underlay Overlay --- */
-body {
+/* body {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    /* This creates a fixed, non-moving background room with a light tint so black text remains readable */
+    /* This creates a fixed, non-moving background room with a light tint so black text remains readable *
     background: 
         linear-gradient(rgba(244, 247, 252, 0.88), rgba(244, 247, 252, 0.92)), 
         url('disease.png') no-repeat center center fixed;
@@ -39,6 +39,38 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
+} */
+/* --- Updated Bulletproof Mobile Background System --- */
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: var(--text-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f7fc; /* Fallback background color */
+}
+
+/* This pseudo-element safely acts as the fixed background layer on mobile devices */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Pushes it completely behind your text and panels */
+    
+    /* Your layered tint and image configuration */
+    background: 
+        linear-gradient(rgba(244, 247, 252, 0.88), rgba(244, 247, 252, 0.92)), 
+        url('disease.png') no-repeat center center;
+    background-size: cover;
+    
+    /* Optimization settings for standard mobile rendering */
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
 }
 :root {
     /* MAIN MEDICAL COLORS */
