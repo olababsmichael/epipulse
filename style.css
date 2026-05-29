@@ -648,3 +648,41 @@ body::before {
     box-shadow: none;
     color: var(--brand-primary);
 }
+/* ==========================================
+   CSS PRINT MODE CONTROLS (FIXED)
+   ========================================== */
+@media print {
+  /* FORCE THE BROWSER TO KEEP BACKGROUND COLORS AND STYLES */
+  html, body {
+    background-color: #ffffff !important;
+    -webkit-print-color-adjust: exact !important; /* For Chrome, Safari, Edge */
+    print-color-adjust: exact !important;         /* Standard rule */
+  }
+
+  /* Hide the rest of the website layout entirely */
+  body *, 
+  .navbar, 
+  .sidebar, 
+  .form-container, 
+  .non-printable-actions,
+  .field-action-btn,
+  button {
+    display: none !important;
+  }
+  
+  /* Make only the medical report visible and expand to full page width */
+  .printable-area, 
+  .printable-area * {
+    display: block !important;
+  }
+  
+  .printable-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    border: none !important;
+    padding: 0 !important;
+    background: transparent !important;
+  }
+}

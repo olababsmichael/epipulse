@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
@@ -77,111 +78,88 @@
 </div>
 
     <form id="epipulseReportForm" novalidate>
-      
-      <!-- GRID SPLIT 1: DISEASE SELECTION & SEVERITY -->
-      <div class="form-grid layout-2-col">
-        
-        <div class="input-node">
-          <label for="diseaseType">Disease or Illness <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-virus-cube field-icon"></i>
-            <select id="diseaseType" required>
-              <option value="" disabled selected>Select illness</option>
-              <option value="Cholera">Cholera (Vibrio cholerae)</option>
-              <option value="Malaria">Malaria (Plasmodium)</option>
-              <option value="Measles">Measles Virus</option>
-              <option value="Tuberculosis">Tuberculosis (MTB)</option>
-              <option value="COVID-19">COVID-19 (SARS-CoV-2)</option>
-              <option value="Lassa Fever">Lassa Hemorrhagic Fever</option>
-              <option value="Other">Other / Novel Outbreak</option>
-            </select>
-          </div>
-          <span class="field-error" id="diseaseTypeError">Select a dynamic clinical condition.</span>
-        </div>
-
-        <div class="input-node">
-          <label for="severityLevel">How Serious Is It? <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-chart-line field-icon"></i>
-            <select id="severityLevel" required>
-              <option value="" disabled selected>Select severity</option>
-              <option value="Mild">Mild</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Severe">Severe</option>
-            </select>
-          </div>
-          <span class="field-error" id="severityError">Please classify triage severity index.</span>
-        </div>
-
-      </div>
-
-      <!-- GRID SPLIT 2: SYMPTOMS MAP (FULL WIDTH) -->
+  
       <div class="input-node">
-        <label for="symptoms">Symptoms Seen <span class="req">*</span></label>
-        <div class="input-wrapper text-area-mode">
-          <i class="fa-solid fa-stethoscope field-icon"></i>
-          <textarea id="symptoms" rows="3" placeholder="Describe the symptoms (e.g., high fever, severe vomiting, difficulty breathing...)" required></textarea>
-        </div>
-        <span class="field-error" id="symptomsError">Clinical presentment notes are mandatory.</span>
-      </div>
-
-      <!-- GRID SPLIT 3: GEOLOCATION & VECTOR MATRIX -->
-      <div class="form-grid layout-3-col">
+        <label style="font-weight: 600; font-size: 1.1rem; color: #111;">
+          Select all the symptoms you or the person is having: <span class="req">*</span>
+        </label>
         
-        <!-- <div class="input-node">
-          <label for="location">Epicenter / Community Location <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-map-location-dot field-icon"></i>
-            <input type="text" id="location" placeholder="e.g., Ward, LGA, Village" required />
-          </div>
-          <span class="field-error" id="locationError">Specify localized cluster anchor.</span>
-        </div> -->
-        <div class="input-node">
-  <label for="location">Location <span class="req">*</span></label>
-  <div class="input-wrapper action-input-mode">
-    <i class="fa-solid fa-map-location-dot field-icon"></i>
-    <input type="text" id="location" placeholder="e.g., Ward, LGA, Village" required />
-    <button type="button" id="geoTriggerBtn" class="field-action-btn" title="Use Current Location">
-      <i class="fa-solid fa-location-crosshairs"></i>
-    </button>
-  </div>
-  <span class="field-error" id="locationError">Enter the location</span>
-</div>
-
-        <div class="input-node">
-          <label for="dateOfOccurrence">Date Symptoms Started <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-regular fa-calendar-check field-icon"></i>
-            <input type="date" id="dateOfOccurrence" required />
-          </div>
-          <span class="field-error" id="dateError">Select the date</span>
-        </div>
-
-        <div class="input-node">
-          <label for="numAffected">Number of People Affected <span class="req">*</span></label>
-          <div class="input-wrapper">
-            <i class="fa-solid fa-calculator field-icon"></i>
-            <input type="number" id="numAffected" min="1" placeholder="Cases detected" required />
-          </div>
-          <span class="field-error" id="numAffectedError">Enter number of affected people</span>
-        </div>
-
-      </div>
-
-      <!-- GRID SPLIT 4: SUPPLEMENTARY TRANSMISSION NOTES -->
-      <div class="input-node">
-        <label for="comments">Additional Notes</label>
-        <div class="input-wrapper text-area-mode">
-          <i class="fa-regular fa-clipboard field-icon"></i>
-          <textarea id="comments" rows="2" placeholder="Detail surrounding conditions"></textarea>
+        <div class="symptoms-checkbox-grid" style="display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 12px;">
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer;">
+            <input type="checkbox" name="symptoms" value="Watery Diarrhea" style="width: 18px; height: 18px;"> 
+            <span>Frequent watery stool (looks like rice-water)</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer;">
+            <input type="checkbox" name="symptoms" value="Vomiting" style="width: 18px; height: 18px;"> 
+            <span>Frequent vomiting</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer;">
+            <input type="checkbox" name="symptoms" value="Severe Thirst" style="width: 18px; height: 18px;"> 
+            <span>Extreme thirst, dry mouth, or sunken eyes</span>
+          </label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer;">
+            <input type="checkbox" name="symptoms" value="Body Weakness" style="width: 18px; height: 18px;"> 
+            <span>Severe body weakness or leg cramps</span>
+          </label>
         </div>
       </div>
 
-      <!-- STRUCTURAL FORM CTAS -->
-      <div class="action-deck">
+      <!-- <div class="input-node" style="margin-top: 20px;">
+        <label for="location">Your Location <span class="req">*</span></label>
+        <div class="input-wrapper action-input-mode">
+          <i class="fa-solid fa-map-location-dot field-icon"></i>
+          <input type="text" id="location" placeholder="Tap crosshair to auto-find your location" readonly required />
+          <button type="button" id="geoTriggerBtn" class="field-action-btn" title="Use Current Location">
+            <i class="fa-solid fa-location-crosshairs"></i>
+          </button>
+        </div>
+        <span class="field-error" id="locationError">Please tap the button to set your location coordinates.</span>
+      </div> -->
+      <div class="input-node" style="margin-top: 20px;">
+        <label for="location">Location Coordinates (Yaba Testing) <span class="req">*</span></label>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <div style="flex: 1;">
+            <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 4px;">Latitude</span>
+            <input type="number" id="manualLat" step="any" placeholder="e.g., 6.5195" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" />
+          </div>
+          <div style="flex: 1;">
+            <span style="font-size: 0.8rem; color: #64748b; display: block; margin-bottom: 4px;">Longitude</span>
+            <input type="number" id="manualLng" step="any" placeholder="e.g., 3.3748" style="width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" />
+          </div>
+        </div>
+
+        <div class="input-wrapper action-input-mode">
+          <i class="fa-solid fa-map-location-dot field-icon"></i>
+          <input type="text" id="location" placeholder="Type coords above OR tap crosshair to auto-fill" readonly required />
+          <button type="button" id="geoTriggerBtn" class="field-action-btn" title="Use Current Location">
+            <i class="fa-solid fa-location-crosshairs"></i>
+          </button>
+        </div>
+        <span class="field-error" id="locationError">Please provide location coordinates before submitting.</span>
+      </div>
+
+      <div class="input-node" style="margin-top: 20px; margin-bottom: 20px;">
+        <label for="symptomStartDate">When did the symptoms start? <span class="req">*</span></label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-calendar-day field-icon"></i>
+          <input type="date" id="symptomStartDate" required style="width: 100%;" />
+        </div>
+        <span class="field-error" id="dateError">Please select the date the illness began.</span>
+      </div>
+
+      <div class="input-node" style="margin-top: 20px;">
+        <label for="numAffected">How many people are sick? <span class="req">*</span></label>
+        <div class="input-wrapper">
+          <i class="fa-solid fa-calculator field-icon"></i>
+          <input type="number" id="numAffected" min="1" value="1" required />
+        </div>
+      </div>
+
+      <div class="action-deck" style="margin-top: 25px;">
         <button type="reset" class="btn-secondary">Clear Form</button>
         <button type="submit" class="btn-primary">
-          <span>Submit Report</span> <i class="fa-solid fa-share-nodes"></i>
+          <span>Submit & Get Medical Report</span> <i class="fa-solid fa-file-medical"></i>
         </button>
       </div>
 
