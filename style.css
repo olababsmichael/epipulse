@@ -651,15 +651,15 @@ body::before {
 /* ==========================================
    CSS PRINT MODE CONTROLS (FIXED)
    ========================================== */
-@media print {
-  /* FORCE THE BROWSER TO KEEP BACKGROUND COLORS AND STYLES */
+/* @media print {
+  /* FORCE THE BROWSER TO KEEP BACKGROUND COLORS AND STYLES *
   html, body {
     background-color: #ffffff !important;
-    -webkit-print-color-adjust: exact !important; /* For Chrome, Safari, Edge */
+    -webkit-print-color-adjust: exact !important; /* For Chrome, Safari, Edge *
     print-color-adjust: exact !important;         /* Standard rule */
-  }
+  /* } */
 
-  /* Hide the rest of the website layout entirely */
+  /* Hide the rest of the website layout entirely *
   body *, 
   .navbar, 
   .sidebar, 
@@ -670,7 +670,7 @@ body::before {
     display: none !important;
   }
   
-  /* Make only the medical report visible and expand to full page width */
+  /* Make only the medical report visible and expand to full page width *
   .printable-area, 
   .printable-area * {
     display: block !important;
@@ -684,5 +684,32 @@ body::before {
     border: none !important;
     padding: 0 !important;
     background: transparent !important;
+  }
+} */
+@media print {
+
+  body {
+    background: #fff !important;
+  }
+
+  .brand-header,
+  .system-footer,
+  .report-hero,
+  .non-printable-actions {
+    display: none !important;
+  }
+
+  .printable-area {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important;
+  }
+
+  .workspace-card {
+    background: white !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
   }
 }

@@ -420,7 +420,7 @@ function renderMedicalBreakdownPage(hospital, symptoms, severity, advice, count,
   workspace.innerHTML = `
     <div class="doctor-handout-wrapper printable-area" style="padding: 10px; font-family: 'Inter', sans-serif;">
       
-      <div style="background-color: ${severity.includes('CRITICAL') ? '#fef2f2' : '#fffbeb'} !important; border-left: 5px solid ${severity.includes('CRITICAL') ? '#ef4444' : '#f59e0b'} !important; padding: 15px; border-radius: 4px; margin-bottom: 25px;">
+      
         <h3 style="margin: 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: ${severity.includes('CRITICAL') ? '#991b1b' : '#92400e'};">Assessment Result</h3>
         <p style="margin: 5px 0 0 0; font-weight: 700; font-size: 1.1rem; color: ${severity.includes('CRITICAL') ? '#b91c1c' : '#b45309'};">${severity}</p>
       </div>

@@ -167,7 +167,7 @@ function initializeBackendFlow() {
             if (verifiedUserRole === "admin" || verifiedUserRole === "field_worker") {
               window.location.href = "dashboard.html";
             } else {
-              window.location.href = "landing.html";
+              window.location.href = "landing_page.html";
             }
           }, 1200);
         }
@@ -208,3 +208,4 @@ function initializeBackendFlow() {
     successBox.classList.remove("hidden");
   }
 }
+
