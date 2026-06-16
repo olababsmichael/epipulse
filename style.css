@@ -688,28 +688,31 @@ body::before {
 } */
 @media print {
 
-  body {
-    background: #fff !important;
+  body::before{
+    display:none !important;
+    content:none !important;
   }
 
   .brand-header,
   .system-footer,
   .report-hero,
   .non-printable-actions {
-    display: none !important;
+    display:none !important;
   }
 
-  .printable-area {
-    display: block !important;
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 20px !important;
+  body{
+    background:#fff !important;
   }
 
-  .workspace-card {
-    background: white !important;
-    box-shadow: none !important;
-    border: none !important;
-    padding: 0 !important;
+  .workspace-card{
+    background:#fff !important;
+    border:none !important;
+    box-shadow:none !important;
+    padding:0 !important;
+  }
+
+  .printable-area{
+    display:block !important;
+    width:100% !important;
   }
 }

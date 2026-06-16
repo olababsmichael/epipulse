@@ -418,15 +418,44 @@ function renderMedicalBreakdownPage(hospital, symptoms, severity, advice, count,
   const symptomBadges = symptoms.map(s => `<span style="background: #f1f5f9; padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; border: 1px solid #cbd5e1; display: inline-block; margin: 2px;">${s}</span>`).join(' ');
 
   workspace.innerHTML = `
-    <div class="doctor-handout-wrapper printable-area" style="padding: 10px; font-family: 'Inter', sans-serif;">
-      
-      
-        <h3 style="margin: 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: ${severity.includes('CRITICAL') ? '#991b1b' : '#92400e'};">Assessment Result</h3>
-        <p style="margin: 5px 0 0 0; font-weight: 700; font-size: 1.1rem; color: ${severity.includes('CRITICAL') ? '#b91c1c' : '#b45309'};">${severity}</p>
+  <div class="doctor-handout-wrapper printable-area" style="padding: 10px; font-family: 'Inter', sans-serif;">
+
+      <div style="
+        margin-bottom:20px;
+        padding:15px;
+        border-radius:8px;
+        background:${severity.includes('CRITICAL') ? '#fef2f2' : '#fffbeb'};
+        border-left:5px solid ${severity.includes('CRITICAL') ? '#dc2626' : '#d97706'};
+      ">
+        <h3 style="
+          margin:0;
+          font-size:0.85rem;
+          text-transform:uppercase;
+          letter-spacing:0.05em;
+          color:${severity.includes('CRITICAL') ? '#991b1b' : '#92400e'};
+        ">
+          Assessment Result
+        </h3>
+
+        <p style="
+          margin:5px 0 0 0;
+          font-weight:700;
+          font-size:1.1rem;
+          color:${severity.includes('CRITICAL') ? '#b91c1c' : '#b45309'};
+        ">
+          ${severity}
+        </p>
       </div>
 
-      <div style="border: 2px dashed #cbd5e1; border-radius: 8px; padding: 20px; background: #fafafa; margin-bottom: 25px; position: relative;">
-        <span style="position: absolute; top: -12px; right: 15px; background: #00d2c4; color: white; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; border-radius: 4px; text-transform: uppercase;">Triage Slip</span>
+      <div style="
+        border:2px dashed #cbd5e1;
+        border-radius:8px;
+        padding:20px;
+        background:#fafafa;
+        margin-bottom:25px;
+        position:relative;
+      ">
+      <span style="position: absolute; top: -12px; right: 15px; background: #00d2c4; color: white; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; border-radius: 4px; text-transform: uppercase;">Triage Slip</span>
         
         <h2 style="margin: 0 0 15px 0; font-size: 1.2rem; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;"><i class="fa-solid fa-notes-medical"></i> EpiPulse Clinical Summary</h2>
         
