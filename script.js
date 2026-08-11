@@ -1,5 +1,5 @@
 // document.addEventListener('DOMContentLoaded', () => {
-//   const form = document.getElementById('YabaHealthReportForm');
+//   const form = document.getElementById('epipulseReportForm');
 //   const locationInput = document.getElementById('location');
   
 //   // Internal state memory store to isolate geographic telemetry
@@ -335,7 +335,7 @@ document.getElementById('geoTriggerBtn').addEventListener('click', () => {
 //     </div>
 //   `;
 // }
-document.getElementById('YabaHealthReportForm').addEventListener('submit', async function(e) {
+document.getElementById('epipulseReportForm').addEventListener('submit', async function(e) {
   e.preventDefault(); 
 
   if (typeof supabaseClient === 'undefined') {
@@ -457,7 +457,7 @@ function renderMedicalBreakdownPage(hospital, symptoms, severity, advice, count,
       ">
       <span style="position: absolute; top: -12px; right: 15px; background: #00d2c4; color: white; padding: 2px 10px; font-size: 0.75rem; font-weight: 700; border-radius: 4px; text-transform: uppercase;">Triage Slip</span>
         
-        <h2 style="margin: 0 0 15px 0; font-size: 1.2rem; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;"><i class="fa-solid fa-notes-medical"></i> YabaHealth Clinical Summary</h2>
+        <h2 style="margin: 0 0 15px 0; font-size: 1.2rem; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 8px;"><i class="fa-solid fa-notes-medical"></i> EpiPulse Clinical Summary</h2>
         
         <p style="margin: 8px 0; font-size: 0.95rem; color: #334155;"><strong>Suspected Disease Profile:</strong> Acute Watery Diarrhea / Cholera</p>
         <p style="margin: 8px 0; font-size: 0.95rem; color: #334155;"><strong>Total Cases Reported:</strong> ${count} Person(s)</p>
