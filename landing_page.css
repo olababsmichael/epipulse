@@ -698,7 +698,7 @@ body::before {
     }
     .main-header { padding: 25px 40px; }
     .virus-bg-container { right: -10%; top: 30%; width: 90vw; height: 90vw; }
-}
+
 
 @media (max-width: 576px) {
     .main-header { padding: 20px; }
