@@ -256,8 +256,6 @@ body::before {
 .text-area-mode .field-icon { top: 18px; }
 
 .input-wrapper select {
-  appearance: none;
-  -webkit-appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: calc(100% - 16px) center;
@@ -722,4 +720,31 @@ body::before {
   textarea {
     font-size: 16px !important;
   }
+}
+/* Keep native input controls visible on mobile */
+input[type="date"] {
+  -webkit-appearance: auto;
+  appearance: auto;
+  color-scheme: light;
+}
+
+input[type="number"] {
+  -webkit-appearance: auto;
+  appearance: auto;
+}
+
+/* Make the date icon clearly visible */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: block;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* Keep number +/- spinner buttons visible */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: auto;
+  appearance: auto;
+  opacity: 1;
+  margin: 0;
 }
